@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <h1><%= title %></h1>
+    <p>Sistema  <%= title %></p>
+
+    <div class="col-xs-12">
+      <form action="<%= action %>" method="post" role="form">
+          <div class="row">
+            <p>Nome:<input type="text" name="nome" value="<%= clientes.nome %>" /></p>
+            <p>CPF:<input type="number" name="cpf" value="<%= clientes.cpf %>" /></p>
+            <div class="col-xs-4">
+              <button type="submit" class="btn btn-default">Confirmar</button>
+            </div>
+          </div>
+      </form>
+  </div>
+
+    <table class="table table-bordered table-striped">
+      <thead><tr>
+          <th>CPF</th>
+          <th>Nome</th>
+          <th>CEP</th>
+      </tr>
+      </thead>
+      
+      <tbody>
+          <% clientes.forEach(function(cliente, index) { %>
+            <tr>              
+              <td><a href="/clientes/editar/<%= cliente._id %>"><%- cliente.cpf %></a></td>              
+              <td><%- cliente.nome %></td>
+              <td><%- cliente.cep %></td>              
+              <td><a href="/clientes/delete/<%= cliente._id %>" 
+                onclick="return confirm('Tem certeza que deseja excluir?');">
+                X
+              </a></td>              
+            </tr>
+          <% }) %>
+      </tbody>
+      
+      
+  </table>
+
+  </body>
+</html>
