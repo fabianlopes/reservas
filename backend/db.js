@@ -51,5 +51,10 @@ async function deleteDb(COLLECTION,id) {
     const db = await connect();
     return db.collection(COLLECTION).deleteOne({ _id: new ObjectId(id) });
 }
+async function updateDb(COLLECTION,id) {
+    const db = await connect();
+    return db.collection(COLLECTION).updateOne({ _id: new ObjectId(id) });
 
-module.exports = { findAll, insertDb, findOne, deleteDb, findOne }
+}
+
+module.exports = { findAll, insertDb, findOne, deleteDb, updateDb }

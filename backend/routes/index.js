@@ -21,25 +21,6 @@ router.get('/funcionarios', async (req, res, next) => {
   }
 })
 
-/* API get funcionarios. */ 
-router.get('/api/funcionarios', async (req, res, next) => {
-  try {    
-    res.send(await db.findAll('funcionarios'));    
-  } catch (err) {
-    next(err);
-  }
-})
-
-/* API get clientes. */ 
-router.get('/api/clientes', async (req, res, next) => {
-  try {    
-    res.send(await db.findAll('clientes'));    
-  } catch (err) {
-    next(err);
-  }
-})
-
-
 /* GET clientes. */ 
 router.get('/clientes', async (req, res, next) => {
   try {
