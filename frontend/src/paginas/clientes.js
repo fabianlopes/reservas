@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Container, Row, Col, Form, FormControl, Button } from 'react-bootstrap';
+import { Container, Row, Col } from 'react-bootstrap';
 import Cabecalho from '../componentes/cabecalho';
 
 
@@ -8,33 +8,29 @@ function Clientes() {
   
   const [tableData, setTableData] = useState([]);
 
-  const handleSubmit = (event) => {
-    event.preventDefault();    
-    
-    const searchTerm = {tags:event.target.search.value};
-    console.log('Pesquisar por:', searchTerm);
-    
-    const fetchTableData = async () => {
+    useEffect(() => {
+      const fetchTableData = async () => {
+      
+      try {
         
-        try {
-          
-          const response = await axios( {
-            method: 'post',
-            url: 'http://localhost:5000/api/clientes',
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            data: searchTerm
-    
-        });
+        const response = await axios( {
+          method: 'get',
+          url: 'http://localhost:5000/api/clientes',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          data: tableData
+  
+      });
+        console.log('resposta' + response.data);
         setTableData(response.data);   
-        } catch (error) {
-          console.error(error);
-        }
-    
-        }
-    fetchTableData();
-    };
+      } catch (error) {
+        console.error(error);
+      }
+  
+      };
+      fetchTableData();
+    }); 
   
   return (    
 
@@ -44,18 +40,7 @@ function Clientes() {
         <Cabecalho />
         </Col>
       </Row>
-      <Row>
-
-        <Form onSubmit={handleSubmit} className="form-container">
-                <FormControl
-                type="text"
-                placeholder="Pesquisar"
-                name='search'
-                />
-                <Button variant="outline-success" type="submit">Pesquisar</Button>
-        </Form>
-
-      </Row>
+     
       <Row>            
 
                 <div className="table-container">
