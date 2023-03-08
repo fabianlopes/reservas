@@ -13,15 +13,8 @@ function Clientes() {
       
       try {
         
-        const response = await axios( {
-          method: 'get',
-          url: 'http://localhost:5000/api/clientes',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          data: tableData
-  
-      });
+        const apiUrl = 'http://localhost:5000/api/clientes';
+        const response = await axios.create({baseURL: apiUrl});
         console.log('resposta' + response.data);
         setTableData(response.data);   
       } catch (error) {
