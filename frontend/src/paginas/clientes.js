@@ -7,28 +7,22 @@ import Cabecalho from '../componentes/cabecalho';
 function Clientes() {
   
   const [tableData, setTableData] = useState([]);
-
-    useEffect(() => {
-      const fetchTableData = async () => {
+  
+  useEffect(() => {
+      async function fetchTableData () {
       
       try {
         
-        useEffect(() => {
-          api
-            .get("/users/romulo27")
-            .then((response) => setUser(response.data))
-            .catch((err) => {
-              console.error("ops! ocorreu um erro" + err);
-            });
-        }, []);
-         
+        const response = await axios.get('http://localhost:5000/api/clientes');
+        console.log('resposta' + response.data);
+        setTableData(response.data);
       } catch (error) {
         console.error(error);
       }
   
       };
       fetchTableData();
-    }); 
+    },[]); 
   
   return (    
 
