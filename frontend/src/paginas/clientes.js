@@ -7,23 +7,22 @@ import Cabecalho from '../componentes/cabecalho';
 function Clientes() {
   
   const [tableData, setTableData] = useState([]);
-
-    useEffect(() => {
-      const fetchTableData = async () => {
+  
+  useEffect(() => {
+      async function fetchTableData () {
       
       try {
         
-        const apiUrl = 'http://localhost:5000/api/clientes';
-        const response = await axios.create({baseURL: apiUrl});
+        const response = await axios.get('http://localhost:5000/api/clientes');
         console.log('resposta' + response.data);
-        setTableData(response.data);   
+        setTableData(response.data);
       } catch (error) {
         console.error(error);
       }
   
       };
       fetchTableData();
-    }); 
+    },[]); 
   
   return (    
 
