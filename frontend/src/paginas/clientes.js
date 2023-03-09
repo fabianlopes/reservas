@@ -13,10 +13,15 @@ function Clientes() {
       
       try {
         
-        const apiUrl = 'http://localhost:5000/api/clientes';
-        const response = await axios.create({baseURL: apiUrl});
-        console.log('resposta' + response.data);
-        setTableData(response.data);   
+        useEffect(() => {
+          api
+            .get("/users/romulo27")
+            .then((response) => setUser(response.data))
+            .catch((err) => {
+              console.error("ops! ocorreu um erro" + err);
+            });
+        }, []);
+         
       } catch (error) {
         console.error(error);
       }
