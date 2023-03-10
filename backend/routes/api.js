@@ -20,6 +20,15 @@ router.get('/funcionarios', async (req, res, next) => {
     }
   })
 
+  /* API get salas. */ 
+  router.get('/salas', async (req, res, next) => {
+    try {    
+      res.send(await db.findAll('salas'));    
+    } catch (err) {
+      next(err);
+    }
+  })
+
 // POST clientes. */
 router.post('/clientes', async (req, res, next) => {
     try {  

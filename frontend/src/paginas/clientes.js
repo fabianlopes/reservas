@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Container, Row, Col } from 'react-bootstrap';
+import { Container, Row, Col, Table } from 'react-bootstrap';
 import Cabecalho from '../componentes/cabecalho';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 
 function Clientes() {
@@ -33,8 +34,8 @@ function Clientes() {
         </Col>
       </Row>
      
-      <Row>            
-
+      <Row>
+        
                 <div className="table-container">
                     <div className="shadow bg-light border-primary text-center">
                         <h2>Clientes</h2>
@@ -61,7 +62,7 @@ function Clientes() {
 
       </Row>        
       
-        <Row className="bg-dark text-white">
+        <Row>
             <Col xs={12}>
                 <p>Developer by FL</p>
             </Col>
