@@ -29,9 +29,9 @@ function Carrossel() {
         <Container fluid>
 
         <Row>
-        <Col xs={12}>
+        
             <Cabecalho />
-        </Col>
+        
         </Row>
         <Row>
 
