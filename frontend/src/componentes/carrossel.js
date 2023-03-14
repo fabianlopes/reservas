@@ -1,7 +1,6 @@
 import {React, useState, useEffect} from 'react';
 import { Carousel, Container, Row, Col, Card } from 'react-bootstrap';
 import axios from 'axios';
-import Cabecalho from './cabecalho';
 
 function Carrossel() {
 
@@ -14,8 +13,6 @@ function Carrossel() {
         
         const response = await axios.get('http://localhost:5000/api/salas');
         setCarrosselData(response.data);
-        console.log('data' + carrosselData);
-        console.log('response' + response);
       } catch (error) {
         console.error(error);
       }
@@ -27,12 +24,7 @@ function Carrossel() {
     return (
       
         <Container fluid>
-
-        <Row>
         
-            <Cabecalho />
-        
-        </Row>
         <Row>
 
         <Card>            
