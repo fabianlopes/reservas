@@ -1,6 +1,8 @@
 import {React, useState, useEffect} from 'react';
-import { Carousel, Container, Row, Col, Card } from 'react-bootstrap';
+import { Carousel, Container, Row, Card } from 'react-bootstrap';
 import axios from 'axios';
+import '../css/carrossel.css';
+import { Link } from 'react-router-dom';
 
 function Carrossel() {
 
@@ -31,9 +33,19 @@ function Carrossel() {
             <Card.Body>
                 <Card.Title></Card.Title>
                 <Card.Text>
-                    <Carousel>        
+                    <Carousel className='carousel'>                      
                         {carrosselData.map((item, index) => (
-                        <Carousel.Item key={item.id}><img key={index} src={item.imagem} alt="" /></Carousel.Item>
+                          
+                        <Carousel.Item className='carousel-item' key={item._id}>
+                          <Link to={`/salas/${item._id}`} >
+                            <img key={index} src={item.imagem} alt={item.numero} />                            
+                            {item._id}
+                          </Link>
+                          <Link to='/salas'>
+                          {item.numero}
+                          </Link>
+                        </Carousel.Item>
+                       
                         ))}
                     </Carousel>
                    

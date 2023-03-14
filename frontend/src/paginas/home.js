@@ -1,15 +1,20 @@
 import React from 'react';
-import { Container } from 'react-bootstrap';
+import { Container, Row } from 'react-bootstrap';
 import Cabecalho from '../componentes/cabecalho';
 import Carrossel from '../componentes/carrossel' 
 //import Netflix from './netflix';
 function Home() {
   return (
     
-    <Container>
+    <Container fluid>
 
-      <Cabecalho/>
-      <Carrossel/>
+      <Row>
+        <Cabecalho/>
+      </Row>
+      <Row>
+        <Carrossel/>
+      </Row>
+      
       
     </Container>
 
