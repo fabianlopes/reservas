@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, Button, Navbar, Nav, Container} from 'react-bootstrap';
+import { Button, Navbar, Nav, Container} from 'react-bootstrap';
 import AnimatedText from 'react-animated-text-content';
 
 //import { FaSearch, FaBell, FaGift } from 'react-icons/fa';
