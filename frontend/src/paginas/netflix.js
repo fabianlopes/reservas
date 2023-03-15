@@ -1,20 +1,11 @@
 import React from 'react';
-import { Container, Row } from 'react-bootstrap';
-import Cabecalho from '../componentes/cabecalho';
-import Carrossel from '../componentes/carrossel' 
-import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { Navbar, Nav, Container } from 'react-bootstrap';
 import { FaSearch, FaBell, FaGift } from 'react-icons/fa';
 
-
-
-function Home() {
+const Netflix = () => {
   return (
     
-    <Container fluid>
-
-    <Router>
       <Navbar bg="dark" variant="dark" expand="lg">
         <Container>
           <Navbar.Brand href="/">Netflix</Navbar.Brand>
@@ -41,26 +32,8 @@ function Home() {
         </Container>
       </Navbar>
 
-      <Switch>
-        <Route path="/" exact>
-          <h1>Homepage</h1>
-        </Route>
-        <Route path="/tv-shows">
-          <h1>TV Shows</h1>
-        </Route>
-        <Route path="/movies">
-          <h1>Movies</h1>
-        </Route>
-        <Route path="/latest">
-          <h1>Latest</h1>
-        </Route>
-      </Switch>
-    </Router>
+      
+  );
+};
 
-</Container>
-
-      )
-      };
-
-export default Home;
-
+export default Netflix;

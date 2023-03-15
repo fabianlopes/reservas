@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Container, Row, Col, Table } from 'react-bootstrap';
+import { Container, Row, Col } from 'react-bootstrap';
 import Cabecalho from '../componentes/cabecalho';
 import 'bootstrap/dist/css/bootstrap.min.css';
 

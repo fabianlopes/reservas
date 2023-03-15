@@ -1,9 +1,8 @@
 import React from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { Container } from 'react-bootstrap';
-import logo from './logo.svg';
 import './App.css';
-import Clientes from './paginas/clientes';
+import Salas from './paginas/salas';
 import Home from './paginas/home';
 
 function App() {
@@ -14,7 +13,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home/>} />
-          <Route path="/clientes" element={<Clientes/>} />
+          <Route path="/salas" element={<Salas/>} />
         </Routes>
       </BrowserRouter>    
 
