@@ -2,15 +2,58 @@ var express = require('express');
 var router = express.Router();
 var db = require('../db')
 
-/* API get funcionarios. */ 
-router.get('/funcionarios', async (req, res, next) => {
-    try {    
-      res.send(await db.findAll('funcionarios'));    
-    } catch (err) {
-      next(err);
-    }
-  })
+/* API get salas. */ 
+router.get('/salas', async (req, res, next) => {
+  try {    
+    res.send(await db.findAll('salas'));    
+  } catch (err) {
+    next(err);
+  }
+})
+
+// API get sala unica. */
+router.get('/salas/:id', async (req, res, next) => {
+  const id = req.params.id;
   
+  try {
+    res.send(await db.findOne('salas',id));
+  } catch (err) {
+    next(err);
+  }
+  })
+
+// POST salas. */
+router.post('/salas', async (req, res, next) => {
+try {  
+    res.send(await db.insertDb('salas',req.body));        
+} catch (err) { 
+  next(err);
+ }
+})
+
+// PUT salas. */
+router.put('/salas/:id', async (req, res, next) => {
+const id = req.params.id;
+
+try {
+  res.send(await db.updateDb('salas',id, req.body));
+} catch (err) {
+  next(err);
+}
+})
+
+// DEL salas. */
+router.delete('/salas/:id', async (req, res, next) => {
+  const id = req.params.id;
+
+  try {
+    res.send(await db.deleteDb('salas',id));
+  } catch (err) {
+    next(err);
+  }
+})
+
+
   /* API get clientes. */ 
   router.get('/clientes', async (req, res, next) => {
     try {    
@@ -20,23 +63,18 @@ router.get('/funcionarios', async (req, res, next) => {
     }
   })
 
-  /* API get salas. */ 
-  router.get('/salas', async (req, res, next) => {
-    try {    
-      res.send(await db.findAll('salas'));    
-    } catch (err) {
-      next(err);
-    }
-  })
-
 // POST clientes. */
 router.post('/clientes', async (req, res, next) => {
-    try {  
-        res.send(await db.insertDb('clientes',req.body));        
-    } catch (err) { 
-      next(err);
-     }
-  })
+  try {  
+      res.send(await db.insertDb('clientes',req.body));        
+  } catch (err) { 
+    next(err);
+   }
+})
+
+  
+
+
   
   // DEL clientes. */
   router.delete('/clientes/:id', async (req, res, next) => {
@@ -48,6 +86,15 @@ router.post('/clientes', async (req, res, next) => {
       next(err);
     }
   })
+
+  /* API get funcionarios. */ 
+router.get('/funcionarios', async (req, res, next) => {
+  try {    
+    res.send(await db.findAll('funcionarios'));    
+  } catch (err) {
+    next(err);
+  }
+})
 
 module.exports = router;
   /*
