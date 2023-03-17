@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Container, Row, Col } from 'react-bootstrap';
+import { Container, Row, Col, Form, Button } from 'react-bootstrap';
 import { useParams, useNavigate  } from "react-router-dom";
 import Cabecalho from '../componentes/cabecalho';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -9,18 +9,15 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 function Salas() {
   
   const { id } = useParams();
-  const [sala, setFormData] = useState([]);
+  const [sala, setFormData] = useState({});
   const history = useNavigate();
   
   useEffect(() => {
       async function fetchFormData () {
       
-      try {
-        
-        console.log('id =' + id);
+      try {        
         const response = await axios.get(`http://localhost:5000/api/salas/${id}`);
-        setFormData(response.data);      
-        console.log('response ' + response.data);
+        setFormData(response.data);
       } catch (error) {
         console.error(error);
       }
@@ -33,15 +30,22 @@ function Salas() {
       event.preventDefault();
       try {
         
-        console.log('id =' + id);
-        const response = await axios.put(`http://localhost:5000/api/salas/${id}`);
-        setFormData(response.data);      
-        console.log('response ' + response.data);
+        const id = event.target._id.value;
+        if (event.nativeEvent.submitter.name === "salvar") {
+          alert(id);
+          await axios.put(`http://localhost:5000/api/salas/${id}`,sala );
+          alert('alterado com sucesso!');
+        }
       } catch (error) {
         console.error(error);
       }
       history(-1);
     }
+
+    const handleChange = (event) => {
+      const { name, value } = event.target;
+      setFormData({ ...sala, [name]: value });
+    };
   
   return (    
 
@@ -52,18 +56,27 @@ function Salas() {
      
       <Row>
       
-        <form onSubmit={handleSubmit}>
-          <p>Numero:<input type="text" name="numero" value={sala.numero} /></p>
-          <p>Tipo:<input type="text" name="tipo" value={sala.tipo} /></p>
-          <p>Capacidade:<input type="text" name="capacidade" value={sala.capacidade} /></p>
-          <p>Valor:<input type="text" name="valor" value={sala.valor} /></p>
-          <p>Imagem:<input type="text" name="imagem" value={sala.imagem} /></p>
-          <p>Descrição:<input type="text" name="descricao" value={sala.descricao} /></p>
-          <input type="submit" name="salvar" value="Salvar" />
-          <input type="submit" name="calcelar" value="Cancelar" />
-        </form>
-        <img src={sala.imagem} alt="imagem banco"></img>
-     
+        <Form onSubmit={handleSubmit}>
+          <Form.Control type="hidden" name="_id" value={sala._id}/>
+          <Form.Label>Numero:</Form.Label>
+          <Form.Control type="text" name="numero" value={sala.numero} onChange={handleChange}/>
+          <Form.Label>Tipo:</Form.Label>
+          <Form.Control type="text" name="tipo" value={sala.tipo} onChange={handleChange}/>
+          <Form.Label>Capacidade:</Form.Label>
+          <Form.Control type="text" name="capacidade" value={sala.capacidade} onChange={handleChange}/>
+          <Form.Label>Valor:</Form.Label>
+          <Form.Control type="text" name="valor" value={sala.valor} onChange={handleChange}/>
+          <Form.Label>Descrição:</Form.Label>
+          <Form.Control type="text" name="descricao" value={sala.descricao} onChange={handleChange}/>
+          
+          
+          <Button variant="primary" type="submit" name="salvar">
+            Salvar
+          </Button>
+          <Button variant="primary" type="submit" name="cancelar">
+            Cancelar
+          </Button>
+        </Form>
       </Row>        
       
         <Row>

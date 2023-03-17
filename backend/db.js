@@ -54,6 +54,7 @@ async function deleteDb(COLLECTION,id) {
 
 async function updateDb(COLLECTION,id, dados) {
     const db = await connect();
+    console.log(dados);
     return db.collection(COLLECTION).updateOne({ _id: new ObjectId(id) }, { $set: dados});
     // db.collection(COLLECTION).updateOne({ _id: new ObjectId(id) }, { $set: customer });
 
