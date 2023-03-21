@@ -55,7 +55,7 @@ function Carrossel() {
 
         </Row>
 
-        </Container>
+      </Container>
 
     );
   }

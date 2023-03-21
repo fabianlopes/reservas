@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Container, Row, Col, Form, Button } from 'react-bootstrap';
+import { Container, Row, Form, Button } from 'react-bootstrap';
 import { useParams, useNavigate  } from "react-router-dom";
-import Cabecalho from '../componentes/cabecalho';
+import Cabecalho from './cabecalho';
+import Rodape from './rodape';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 
@@ -30,11 +31,17 @@ function Salas() {
       event.preventDefault();
       try {
         
-        const id = event.target._id.value;
+        //const id = event.target._id.value;
         if (event.nativeEvent.submitter.name === "salvar") {
           alert(id);
-          await axios.put(`http://localhost:5000/api/salas/${id}`,sala );
-          alert('alterado com sucesso!');
+          if (id.length === 0) {
+              await axios.post('http://localhost:5000/api/salas/',sala );
+              alert('incluido com sucesso!'); 
+          }
+          else {
+              await axios.put(`http://localhost:5000/api/salas/${id}`,sala );
+              alert('alterado com sucesso!');
+          }
         }
       } catch (error) {
         console.error(error);
@@ -57,7 +64,6 @@ function Salas() {
       <Row>
       
         <Form onSubmit={handleSubmit}>
-          <Form.Control type="hidden" name="_id" value={sala._id}/>
           <Form.Label>Numero:</Form.Label>
           <Form.Control type="text" name="numero" value={sala.numero} onChange={handleChange}/>
           <Form.Label>Tipo:</Form.Label>
@@ -80,9 +86,7 @@ function Salas() {
       </Row>        
       
         <Row>
-            <Col xs={12}>
-                <p>Developer by FL</p>
-            </Col>
+          <Rodape/>
         </Row>    
 
     </Container>

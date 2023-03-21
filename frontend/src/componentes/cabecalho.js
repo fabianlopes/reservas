@@ -1,8 +1,8 @@
 import React from 'react';
 import { Button, Navbar, Nav, Container} from 'react-bootstrap';
 import AnimatedText from 'react-animated-text-content';
+import { Link } from 'react-router-dom';
 
-//import { FaSearch, FaBell, FaGift } from 'react-icons/fa';
 
 function Cabecalho() {
   
@@ -50,7 +50,9 @@ function Cabecalho() {
                     <Nav.Link href="/contatos">Contatos</Nav.Link>
                     <Nav.Link href="/sobre">Sobre</Nav.Link>
                   </Nav>
-                  <Button variant="outline-primary">Login</Button>
+                  <Link to="/index">
+                    <Button variant="outline-primary">Intranet</Button>
+                  </Link>
                 </Navbar.Collapse>
 
             </Container>
