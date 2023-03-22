@@ -23,12 +23,13 @@ function ListaSalas() {
   
       };
       fetchTableData();
-    },[]); 
+    },[tableData]); 
     
     async function handleDelete(id) {
       try {
              await axios.delete(`http://localhost:5000/api/salas/${id}`);
             alert('deletado com sucesso!');
+            this.fetchTableData();
       } catch (error) {
         console.error(error);
       }      
@@ -37,14 +38,10 @@ function ListaSalas() {
   return (    
 
     <Container fluid>
-      <Row>
-        
-        <Cabecalho />
-        
-      </Row>
-     
-      <Row>
-        
+      <Row>        
+        <Cabecalho />        
+      </Row>     
+      <Row>        
                 <div className="table-container">
                     <div className="shadow bg-light border-primary text-center">
                         <h2>Salas</h2>
@@ -82,7 +79,7 @@ function ListaSalas() {
                                       className="rounded-circle"
                                       width="30"
                                       height="30"
-                                      onClick={handleDelete(row._id)}
+                                      onClick={() => handleDelete(row._id)}
                                     />
                                 </td>
                             </tr>
@@ -91,9 +88,7 @@ function ListaSalas() {
                         </tbody>
                     </table>
                 </div>
-
-      </Row>        
-      
+      </Row>
         <Row>
         <Rodape/>
           <Link to="/salas/:id">
@@ -107,8 +102,7 @@ function ListaSalas() {
             />
           </Button>
           </Link>
-        </Row>    
-
+        </Row>
     </Container>
   );
 }

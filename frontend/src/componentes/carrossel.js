@@ -1,5 +1,5 @@
 import {React, useState, useEffect} from 'react';
-import { Carousel, Container, Row, Card } from 'react-bootstrap';
+import { Carousel, Container, Card } from 'react-bootstrap';
 import axios from 'axios';
 import '../css/carrossel.css';
 import { Link } from 'react-router-dom';
@@ -27,12 +27,10 @@ function Carrossel() {
       
         <Container fluid>
         
-        <Row>
-
-        <Card>            
+        <Card as='div'>            
             <Card.Body>
                 <Card.Title></Card.Title>
-                <Card.Text>
+                <Card.Text as='div'>
                     <Carousel className='carousel'>                      
                         {carrosselData.map((item, index) => (
                           
@@ -52,8 +50,6 @@ function Carrossel() {
                 </Card.Text>          
             </Card.Body>
         </Card>
-
-        </Row>
 
       </Container>
 
