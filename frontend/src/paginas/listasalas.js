@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Container, Row, Button, Image } from 'react-bootstrap';
+import { Container, Row, Button, Image, Modal } from 'react-bootstrap';
 import Cabecalho from '../componentes/cabecalho';
 import Rodape from '../componentes/rodape';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -9,6 +9,8 @@ import { Link } from 'react-router-dom';
 function ListaSalas() {
   
   const [tableData, setTableData] = useState([]);
+  const [showModal, setShowModal] = useState(false);
+
   
   useEffect(() => {
       async function fetchTableData () {
@@ -24,15 +26,21 @@ function ListaSalas() {
       };
       fetchTableData();
     },[tableData]); 
-    
+
+    const handleCancel = () => {
+      setShowModal(false); // fechar o modal
+    };
+
     async function handleDelete(id) {
-      try {
-             await axios.delete(`http://localhost:5000/api/salas/${id}`);
-            alert('deletado com sucesso!');
-            this.fetchTableData();
-      } catch (error) {
-        console.error(error);
-      }      
+          try {
+                await axios.delete(`http://localhost:5000/api/salas/${id}`);
+                alert('deletado com sucesso!');
+                this.fetchTableData();
+          } catch (error) {
+            console.error(error);
+          }
+          setShowModal(false);
+           
     }
   
   return (    
@@ -79,8 +87,26 @@ function ListaSalas() {
                                       className="rounded-circle"
                                       width="30"
                                       height="30"
-                                      onClick={() => handleDelete(row._id)}
+                                      onClick={() => setShowModal(true)}
                                     />
+
+                                    <Modal show={showModal} onHide={() => setShowModal(false)}>
+                                      <Modal.Header closeButton>
+                                        <Modal.Title>Confirmação</Modal.Title>
+                                      </Modal.Header>
+                                      <Modal.Body>
+                                        Tem certeza que deseja confirmar?
+                                      </Modal.Body>
+                                      <Modal.Footer>
+                                        <Button variant="secondary" onClick={handleCancel}>
+                                          Cancelar
+                                        </Button>
+                                        <Button variant="primary" onClick={() => handleDelete(row._id)}>
+                                          Confirmar
+                                        </Button>
+                                      </Modal.Footer>
+                                    </Modal>
+                                    
                                 </td>
                             </tr>
                             );
@@ -91,19 +117,24 @@ function ListaSalas() {
       </Row>
         <Row>
         <Rodape/>
-          <Link to="/salas/:id">
-          <Button>
-            <Image
-              src="https://cdn-icons-png.flaticon.com/512/4315/4315609.png"
-              alt="Incluir"
-              className="rounded-circle"
-              width="30"
-              height="30"
-            />
-          </Button>
+          <Link to="/salas/">
+            <Button>
+              <Image
+                src="https://cdn-icons-png.flaticon.com/512/4315/4315609.png"
+                alt="Incluir"
+                className="rounded-circle"
+                width="30"
+                height="30"
+              />
+            </Button>
           </Link>
         </Row>
+
+        
+
+
     </Container>
+
   );
 }
 

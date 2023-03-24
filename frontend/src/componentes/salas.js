@@ -34,7 +34,7 @@ function Salas() {
         //const id = event.target._id.value;
         if (event.nativeEvent.submitter.name === "salvar") {
           alert(id);
-          if (id === ':id') {
+          if (typeof id === 'undefined') {
               await axios.post('http://localhost:5000/api/salas/',sala );
               alert('incluido com sucesso!'); 
           }
