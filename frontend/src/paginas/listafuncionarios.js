@@ -4,9 +4,9 @@ import Cabecalho from '../componentes/cabecalho';
 import Rodape from '../componentes/rodape';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Link } from 'react-router-dom';
-import salasService from '../services/salasService';
+import funcionariosService from '../services/funcionariosService';
 
-function ListaSalas() {
+function ListaFuncionarios() {
   
   const [tableData, setTableData] = useState([]);
   const [showModal, setShowModal] = useState(false);
@@ -17,9 +17,9 @@ function ListaSalas() {
       
       try {
 
-        const response = await salasService.getSalas();
+        const response = await funcionariosService.getFuncionarios();
         setTableData(response.data);
-
+        
       } catch (error) {
         console.error(error);
       }
@@ -34,7 +34,7 @@ function ListaSalas() {
 
     async function handleDelete(id) {
           try {
-                await salasService.deleteSalas(id);
+                await funcionariosService.deleteFuncionarios(id);
                 alert('deletado com sucesso!');
                 this.fetchTableData();
           } catch (error) {
@@ -53,7 +53,7 @@ function ListaSalas() {
       <Row>        
                 <div className="table-container">
                     <div className="shadow bg-light border-primary text-center">
-                        <h2>Salas</h2>
+                        <h2>funcionarios</h2>
                     </div>
                     <table className='striped bordered hover'>
                         <thead>
@@ -71,7 +71,7 @@ function ListaSalas() {
                                 <td>{row.tipo}</td>
                                 <td>{row.descricao}</td>
                                 <td>
-                                  <Link to={`/salas/${row._id}`} >
+                                  <Link to={`/funcionarios/${row._id}`} >
                                     <Image
                                           src="https://cdn-icons-png.flaticon.com/512/1159/1159633.png"
                                           alt="editar"
@@ -118,7 +118,7 @@ function ListaSalas() {
       </Row>
         <Row>
         <Rodape/>
-          <Link to="/salas/">
+          <Link to="/funcionarios/">
             <Button>
               <Image
                 src="https://cdn-icons-png.flaticon.com/512/4315/4315609.png"
@@ -139,4 +139,4 @@ function ListaSalas() {
   );
 }
 
-export default ListaSalas;
+export default ListaFuncionarios;

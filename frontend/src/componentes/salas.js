@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import { Container, Row, Form, Button } from 'react-bootstrap';
 import { useParams, useNavigate  } from "react-router-dom";
 import Cabecalho from './cabecalho';
 import Rodape from './rodape';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import salasService from '../services/salasService';
+
 
 
 function Salas() {
@@ -17,8 +18,10 @@ function Salas() {
       async function fetchFormData () {
       
       try {        
-        const response = await axios.get(`http://localhost:5000/api/salas/${id}`);
+        
+        const response = await salasService.getOneSalas(id);
         setFormData(response.data);
+
       } catch (error) {
         console.error(error);
       }
@@ -35,12 +38,16 @@ function Salas() {
         if (event.nativeEvent.submitter.name === "salvar") {
           alert(id);
           if (typeof id === 'undefined') {
-              await axios.post('http://localhost:5000/api/salas/',sala );
-              alert('incluido com sucesso!'); 
+              
+              await salasService.createSalas(sala);
+              alert('incluido com sucesso!');
+               
           }
           else {
-              await axios.put(`http://localhost:5000/api/salas/${id}`,sala );
+              
+              await salasService.updateSalas(id,sala);
               alert('alterado com sucesso!');
+              
           }
         }
       } catch (error) {
