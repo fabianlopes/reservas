@@ -11,27 +11,6 @@ exports.getReservas = async(req, res) => {
   }
 }
 
-// apenas para testes
-exports.getReservas = async(req, res) => {
-  try {
-      const reservas = await reserva.reservaModel.find();
-      res.json(reservas)
-  }catch(error) {
-      res.status(500).json({ message: error.message });
-
-  }
-}
-
-exports.getReservas = async(req, res) => {
-  try {
-      const response = await reserva.reservaModel.find();
-      res.json(response)
-  }catch(error) {
-      res.status(500).json({ message: error.message });
-
-  }
-}
-
 exports.consultaDatasReservas = async (req, res) => {   
   const { inicio, fim } = req.query;
 
