@@ -1,5 +1,16 @@
 const reserva = require('../models/reservas')
 
+// apenas para testes
+exports.getReservas = async(req, res) => {
+  try {
+      const reservas = await reserva.reservaModel.find();
+      res.json(reservas)
+  }catch(error) {
+      res.status(500).json({ message: error.message });
+
+  }
+}
+
 exports.consultaReservas = async (req, res) => {   
   const { inicio, fim } = req.query;
 

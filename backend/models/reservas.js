@@ -4,7 +4,7 @@ mongoose.connect('mongodb://127.0.0.1/reservas', { useNewUrlParser: true});
 
 var Schema = mongoose.Schema;
 
-const reserva = new Schema ({
+var reserva = new Schema ({
 
     numero      : { type:Number, required: true},
     sala        : { type:String, required: true},
@@ -18,7 +18,7 @@ const reserva = new Schema ({
     status      : { type:String, required: true}    
 })
 
-const reservaModel = mongoose.model('reservas_collection', reserva);
+const reservaModel = mongoose.model('reservas_collections', reserva);
 
 
 module.exports = {reservaModel}

@@ -14,7 +14,7 @@ const funcionario = new Schema ({
     funcao     : { type:String, required: true}
 })
 
-const FuncionarioModel = mongoose.model('funcionarioss', funcionario);
+const FuncionarioModel = mongoose.model('funcionarios', funcionario);
 
 
 module.exports = {FuncionarioModel}
