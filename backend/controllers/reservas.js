@@ -1,6 +1,16 @@
 const reserva = require('../models/reservas')
 
-exports.consultaReservas = async (req, res) => {   
+exports.getReservas = async(req, res) => {
+  try {
+      const response = await reserva.reservaModel.find();
+      res.json(response)
+  }catch(error) {
+      res.status(500).json({ message: error.message });
+
+  }
+}
+
+exports.consultaDatasReservas = async (req, res) => {   
   const { inicio, fim } = req.query;
 
   // Verifica se os parâmetros estão presentes
@@ -18,7 +28,7 @@ exports.consultaReservas = async (req, res) => {
       res.status(400).json({ message: 'A data final deve ser posterior à data inicial' });
     } else {
       // Executa a consulta no banco de dados
-      const response = await reserva.find({ data: { $gte: inicioData, $lte: fimData } }, (err, resultados) => {
+      const response = await reserva.reservaModel.find({ data: { $gte: inicioData, $lte: fimData } }, (err, resultados) => {
         if (err) {
           console.error(err);
         } else {
@@ -31,7 +41,29 @@ exports.consultaReservas = async (req, res) => {
   }
 };
 
-exports.getoneReserva = async (req, res) => {   
+exports.consultaSalasReservas = async (req, res) => {   
+  const sala_reserva = req.query;
+
+  // Verifica se os parâmetros estão presentes
+  if (!sala) {
+    res.status(400).json({ message: 'Parâmetro inválido' });
+  } else {
+    
+      // Executa a consulta no banco de dados
+      const response = await reserva.reservaModel.find({ sala: sala_reserva }, (err, resultados) => {
+        if (err) {
+          console.error(err);
+        } else {
+          console.log(resultados);
+        }
+      });
+      
+      res.send(response.data);
+    }
+  };
+
+
+exports.getOneReserva = async (req, res) => {   
   try {
     res.status(201).json(await reserva.reservaModel.findById(req.params.id));
   } catch (error) {
@@ -47,7 +79,7 @@ exports.createReserva = async (req, res) => {
     }
   };
 
-  exports.updateReserva = async (req, res) => {   
+exports.updateReserva = async (req, res) => {   
     try {;
       res.status(201).json(await reserva.reservaModel.findByIdAndUpdate(req.params.id,req.body));
     } catch (error) {
@@ -55,10 +87,19 @@ exports.createReserva = async (req, res) => {
     }
   };
 
-  exports.cancelaReserva = async (req, res) => {   
+exports.cancelaReserva = async (req, res) => {   
     try {;
       res.status(201).json(await reserva.reservaModel.findByIdAndUpdate(req.params.id, { status: 'C' } ));
     } catch (error) {
       res.status(400).json({ message: error.message });
     }
   };
+/*
+exports.disponivelReserva = async (req, res) => {   
+    try {;
+      res.status(201).json(await reserva.reservaModel.findByIdAndUpdate(req.params.id, { status: 'C' } ));
+    } catch (error) {
+      res.status(400).json({ message: error.message });
+    }
+  };
+*/
