@@ -29,37 +29,32 @@ exports.consultaDatasReservas = async (req, res) => {
       res.status(400).json({ message: 'A data final deve ser posterior à data inicial' });
     } else {
       // Executa a consulta no banco de dados
-      const response = await reserva.reservaModel.find({ data: { $gte: inicioData, $lte: fimData } }, (err, resultados) => {
-        if (err) {
-          console.error(err);
-        } else {
-          console.log(resultados);
-        }
-      });
-      
-      res.send(response.data);
+      try {
+        res.status(201).json(await reserva.reservaModel.find({ data: { $gte: inicioData, $lte: fimData } }));
+      } catch (error) {
+        res.status(400).json({ message: error.message });
+      }
     }
-  }
-};
+
+    }
+  };
 
 exports.consultaSalasReservas = async (req, res) => {   
-  const sala_reserva = req.query;
+  const sala_numero = req.body.sala;
 
   // Verifica se os parâmetros estão presentes
-  if (!sala) {
+  if (!sala_numero) {
     res.status(400).json({ message: 'Parâmetro inválido' });
   } else {
-    
-      // Executa a consulta no banco de dados
-      const response = await reserva.reservaModel.find({ sala: sala_reserva }, (err, resultados) => {
-        if (err) {
-          console.error(err);
-        } else {
-          console.log(resultados);
-        }
-      });
-      
-      res.send(response.data);
+
+      // Executa a consulta no banco de dados      
+      //const sala_numero = new String(sala_reserva);
+      console.log('sala param ' + + sala_numero);
+      try {
+        res.status(201).json(await reserva.reservaModel.find({ sala: sala_numero }));
+      } catch (error) {
+        res.status(400).json({ message: error.message });
+      }
     }
   };
 

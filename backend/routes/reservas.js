@@ -5,15 +5,17 @@ var reservaController = require('../controllers/reservas');
 //consultar reservas teste
 router.get('/', reservaController.getReservas);
 //consultar reservas em um perido
-router.get('/consulta/', reservaController.consultaReservas);
+router.get('/consultadatas/', reservaController.consultaDatasReservas);
+//consultar salas com reservas
+router.get('/consultasalas/', reservaController.consultaSalasReservas);
 // criar a reserva
 router.post('/', reservaController.createReserva);
 // alterar sala ou periodo da reserva
 router.put('/:id', reservaController.updateReserva);
-// ver disponibilidade de sala e data para reserva
-//router.get('/disponivel/:id', reservaController.disponivelReserva);
+// busca uma reserva 
+router.get('/:id', reservaController.getOneReserva);
 // cancelar a reserva
-router.put('/cancelar/:id', reservaController.cancelarReserva);
+router.put('/cancelar/:id', reservaController.cancelaReserva);
 
 
 module.exports = router;
