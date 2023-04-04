@@ -63,6 +63,26 @@ router.delete('/salas/:id', async (req, res, next) => {
     }
   })
 
+  /* API get salas. */ 
+  router.get('/salas', async (req, res, next) => {
+    try {    
+      res.send(await db.findAll('salas'));    
+    } catch (err) {
+      next(err);
+    }
+  })
+
+  // API get sala unica. */
+  router.get('/salas/:id', async (req, res, next) => {
+    const id = req.params.id;
+  
+    try {
+      res.send(await db.findOne('salas',id));
+    } catch (err) {
+      next(err);
+    }
+  })
+
 // POST clientes. */
 router.post('/clientes', async (req, res, next) => {
   try {  
