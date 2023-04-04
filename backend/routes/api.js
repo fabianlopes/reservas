@@ -29,6 +29,17 @@ router.get('/funcionarios', async (req, res, next) => {
     }
   })
 
+  // API get sala unica. */
+  router.get('/salas/:id', async (req, res, next) => {
+    const id = req.params.id;
+  
+    try {
+      res.send(await db.findOne('salas',id));
+    } catch (err) {
+      next(err);
+    }
+  })
+
 // POST clientes. */
 router.post('/clientes', async (req, res, next) => {
     try {  
