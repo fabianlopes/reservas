@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Row, Form, Button } from 'react-bootstrap';
 import { useParams, useNavigate  } from "react-router-dom";
-import Cabecalho from './cabecalho';
-import Rodape from './rodape';
+import Cabecalho from '../componentes/cabecalho';
+import Rodape from '../componentes/rodape';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import salasService from '../services/salasService';
 

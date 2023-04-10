@@ -1,8 +1,7 @@
-import {React, useState, useEffect} from 'react';
+import React, {useState, useEffect} from 'react';
 import { Carousel, Container, Card } from 'react-bootstrap';
-import axios from 'axios';
-import '../css/carrossel.css';
 import { Link } from 'react-router-dom';
+import salasService from '../services/salasService';
 
 function Carrossel() {
 
@@ -12,8 +11,7 @@ function Carrossel() {
       async function fetchCarrosselData () {
       
       try {
-        
-        const response = await axios.get('http://localhost:5000/api/salas');
+        const response = await salasService.getSalas();
         setCarrosselData(response.data);
       } catch (error) {
         console.error(error);
