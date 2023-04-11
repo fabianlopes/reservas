@@ -5,6 +5,7 @@ import Cabecalho from '../componentes/cabecalho';
 import Rodape from '../componentes/rodape';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import reservasService from '../services/reservasService';
+import ComboSalas from '../componentes/combosalas';
 
 
 
@@ -19,7 +20,7 @@ function Reservas() {
       
       try {        
         
-        const response = await reservasService.getOnereservas(id);
+        const response = await reservasService.getOneReservas(id);
         setFormData(response.data);
 
       } catch (error) {
@@ -37,15 +38,15 @@ function Reservas() {
         
         if (event.nativeEvent.submitter.name === "salvar") {
           alert(id);
-          if (typeof id === 'undefined') {
+          if (id === 'inserir') {
               
-              await reservasService.createreservas(reserva);
+              await reservasService.createReservas(reserva);
               alert('incluido com sucesso!');
                
           }
           else {
               
-              await reservasService.updatereservas(id,reserva);
+              await reservasService.updateReservas(id,reserva);
               alert('alterado com sucesso!');
               
           }
@@ -71,16 +72,20 @@ function Reservas() {
       <Row>
       
         <Form onSubmit={handleSubmit}>
+
+          <ComboSalas onSelect={handleChange}/>
           <Form.Label>Numero:</Form.Label>
-          <Form.Control type="text" name="numero" value={sala.numero} onChange={handleChange}/>
-          <Form.Label>Tipo:</Form.Label>
-          <Form.Control type="text" name="tipo" value={sala.tipo} onChange={handleChange}/>
-          <Form.Label>Capacidade:</Form.Label>
-          <Form.Control type="text" name="capacidade" value={sala.capacidade} onChange={handleChange}/>
+          <Form.Control type="text" name="numero" value={reserva.numero} onChange={handleChange}/>
+          <Form.Label>Data:</Form.Label>
+          <Form.Control type="date" name="data" value={reserva.data} onChange={handleChange}/>
+          <Form.Label>Hora inicio:</Form.Label>
+          <Form.Control type="number" name="number" value={reserva.inicio} onChange={handleChange}/>
+          <Form.Label>Hora fim:</Form.Label>
+          <Form.Control type="number" name="number" value={reserva.fim} onChange={handleChange}/>          
           <Form.Label>Valor:</Form.Label>
-          <Form.Control type="text" name="valor" value={sala.valor} onChange={handleChange}/>
-          <Form.Label>Descrição:</Form.Label>
-          <Form.Control type="text" name="descricao" value={sala.descricao} onChange={handleChange}/>
+          <Form.Control type="number" name="valor" value={reserva.valor} onChange={handleChange}/>
+          <Form.Label>Observação:</Form.Label>
+          <Form.Control type="text" name="observacao" value={reserva.observacao} onChange={handleChange}/>
           
           
           <Button variant="primary" type="submit" name="salvar">

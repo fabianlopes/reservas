@@ -6,6 +6,7 @@ import Salas from './paginas/salas';
 import Home from './paginas/home';
 import ListaSalas from './paginas/listasalas';
 import Index from './paginas';
+import Reservas from './paginas/reservas';
 
 function App() {
   return (
@@ -19,6 +20,8 @@ function App() {
           <Route path="/salas/" element={<Salas/>} />
           <Route path="/salas/:id" element={<Salas/>} />
           <Route path="/listaSalas" element={<ListaSalas/>} />
+          <Route path="/reservas" element={<Reservas/>} />
+          <Route path="/reservas/:id" element={<Reservas/>} />
         </Routes>
       </BrowserRouter>    
 

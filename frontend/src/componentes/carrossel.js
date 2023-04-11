@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import { Carousel, Container, Card } from 'react-bootstrap';
+import { Carousel, Container, Card, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import salasService from '../services/salasService';
 
@@ -45,7 +45,10 @@ function Carrossel() {
                         ))}
                     </Carousel>
                    
-                </Card.Text>          
+                </Card.Text>
+                <Link to='/reservas/inserir'>
+                          <Button>Reserve aqui</Button>
+                </Link>
             </Card.Body>
         </Card>
 
