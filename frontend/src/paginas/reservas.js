@@ -6,14 +6,12 @@ import Rodape from '../componentes/rodape';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import reservasService from '../services/reservasService';
 import ComboSalas from '../componentes/combosalas';
-import salasService from '../services/salasService';
-
 
 function Reservas() {
   
   const { id } = useParams();
   const [reserva, setFormData] = useState({});
-  const [selectData, setSelectData] = useState([]);
+  const [selectedValue, setSelectedValue] = useState('');
 
   const history = useNavigate();
   
@@ -22,11 +20,10 @@ function Reservas() {
       
       try {
 
-        const responseSala = await salasService.getSalas();
-        setSelectData(responseSala.data);
-        
+        if (id !== 'inserir') {
         const response = await reservasService.getOneReservas(id);
         setFormData(response.data);
+        }
 
       } catch (error) {
         console.error(error);
@@ -42,10 +39,8 @@ function Reservas() {
         
         
         if (event.nativeEvent.submitter.name === "salvar") {
-          alert(id);
-          alert(reserva.sala);
           reserva.funcionario = 'WEB - Internet';
-          reserva.funcionario = 'Internet - WWW';
+          reserva.cliente = 'Internet - WWW';
           reserva.status = 'R'; // indicar sala reservada
           if (id === 'inserir') {
               
@@ -69,13 +64,12 @@ function Reservas() {
     const handleChange = (event) => {
       const { name, value } = event.target;
       setFormData({ ...reserva, [name]: value });
-    };
+    };    
 
-    const handleSelect = (event) => {
-      event.preventDefault()
-      const value = event.target.value;
-      setSelectData(value);
-    };
+    const handleSelectChange = (value) => {
+      setSelectedValue(value);      
+      reserva.sala = value;
+    };    
   
   return (    
 
@@ -86,19 +80,13 @@ function Reservas() {
      
       <Row>
       
-        <Form onSubmit={handleSubmit}>
+        <Form onSubmit={handleSubmit}>          
+          
+          <Form.Label>Valor select</Form.Label>
+          <Form.Control name='sala' type="text" value={selectedValue} readOnly />
 
-          <ComboSalas value={reserva.sala} onSelect={handleChange}/>
-
-          <Form.Label>Selecione uma sala</Form.Label>
-          <Form.Control as="select" name='sala' value={selectData}>
-              {selectData.map(item => (
-                <option key={item._id} value={item._id} onChange={handleSelect}>
-                  {item.numero} - {item.tipo} - {item.descricao}
-                </option>
-              ))}
-          </Form.Control>
-
+          <ComboSalas onSelectChange={handleSelectChange} />
+          
           <Form.Label>Numero:</Form.Label>
           <Form.Control type="text" name="numero" value={reserva.numero} onChange={handleChange}/>
           <Form.Label>Data:</Form.Label>
@@ -121,7 +109,7 @@ function Reservas() {
         </Form>
       </Row>        
       
-        <Row>
+        <Row>          
           <Rodape/>
         </Row>    
 
