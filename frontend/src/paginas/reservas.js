@@ -71,17 +71,18 @@ function Reservas() {
      
       <Row>
       
-        <Form onSubmit={handleSubmit}>
+        <Form onSubmit={handleSubmit}> 
 
-          <ComboSalas onSelect={handleChange}/>
+          <ComboSalas value={reserva.sala} onSelect={handleChange}/>
+
           <Form.Label>Numero:</Form.Label>
           <Form.Control type="text" name="numero" value={reserva.numero} onChange={handleChange}/>
           <Form.Label>Data:</Form.Label>
           <Form.Control type="date" name="data" value={reserva.data} onChange={handleChange}/>
           <Form.Label>Hora inicio:</Form.Label>
-          <Form.Control type="number" name="number" value={reserva.inicio} onChange={handleChange}/>
+          <Form.Control type="number" name="inicio" value={reserva.inicio} onChange={handleChange}/>
           <Form.Label>Hora fim:</Form.Label>
-          <Form.Control type="number" name="number" value={reserva.fim} onChange={handleChange}/>          
+          <Form.Control type="number" name="fim" value={reserva.fim} onChange={handleChange}/>          
           <Form.Label>Valor:</Form.Label>
           <Form.Control type="number" name="valor" value={reserva.valor} onChange={handleChange}/>
           <Form.Label>Observação:</Form.Label>
