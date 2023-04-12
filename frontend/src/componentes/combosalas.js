@@ -21,6 +21,7 @@ function ComboSalas() {
     },[selectData]);
 
     const handleChange = (event) => {
+      event.preventDefault()
       const value = event.target.value;
       setSelectData(value);
     };

@@ -6,19 +6,24 @@ import Rodape from '../componentes/rodape';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import reservasService from '../services/reservasService';
 import ComboSalas from '../componentes/combosalas';
-
+import salasService from '../services/salasService';
 
 
 function Reservas() {
   
   const { id } = useParams();
   const [reserva, setFormData] = useState({});
+  const [selectData, setSelectData] = useState([]);
+
   const history = useNavigate();
   
   useEffect(() => {
       async function fetchFormData () {
       
-      try {        
+      try {
+
+        const responseSala = await salasService.getSalas();
+        setSelectData(responseSala.data);
         
         const response = await reservasService.getOneReservas(id);
         setFormData(response.data);
@@ -38,6 +43,10 @@ function Reservas() {
         
         if (event.nativeEvent.submitter.name === "salvar") {
           alert(id);
+          alert(reserva.sala);
+          reserva.funcionario = 'WEB - Internet';
+          reserva.funcionario = 'Internet - WWW';
+          reserva.status = 'R'; // indicar sala reservada
           if (id === 'inserir') {
               
               await reservasService.createReservas(reserva);
@@ -61,6 +70,12 @@ function Reservas() {
       const { name, value } = event.target;
       setFormData({ ...reserva, [name]: value });
     };
+
+    const handleSelect = (event) => {
+      event.preventDefault()
+      const value = event.target.value;
+      setSelectData(value);
+    };
   
   return (    
 
@@ -71,9 +86,18 @@ function Reservas() {
      
       <Row>
       
-        <Form onSubmit={handleSubmit}> 
+        <Form onSubmit={handleSubmit}>
 
           <ComboSalas value={reserva.sala} onSelect={handleChange}/>
+
+          <Form.Label>Selecione uma sala</Form.Label>
+          <Form.Control as="select" name='sala' value={selectData}>
+              {selectData.map(item => (
+                <option key={item._id} value={item._id} onChange={handleSelect}>
+                  {item.numero} - {item.tipo} - {item.descricao}
+                </option>
+              ))}
+          </Form.Control>
 
           <Form.Label>Numero:</Form.Label>
           <Form.Control type="text" name="numero" value={reserva.numero} onChange={handleChange}/>
@@ -86,8 +110,7 @@ function Reservas() {
           <Form.Label>Valor:</Form.Label>
           <Form.Control type="number" name="valor" value={reserva.valor} onChange={handleChange}/>
           <Form.Label>Observação:</Form.Label>
-          <Form.Control type="text" name="observacao" value={reserva.observacao} onChange={handleChange}/>
-          
+          <Form.Control type="text" name="observacao" value={reserva.observacao} onChange={handleChange}/>          
           
           <Button variant="primary" type="submit" name="salvar">
             Salvar
