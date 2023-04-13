@@ -39,9 +39,14 @@ function Reservas() {
         
         
         if (event.nativeEvent.submitter.name === "salvar") {
-          reserva.funcionario = 'WEB - Internet';
-          reserva.cliente = 'Internet - WWW';
+
+          // deve vir como parametro se for WEB ou Local
+          reserva.funcionario = 'WEB - Internet'; // funcionario WEB
+          reserva.cliente = 'Internet - WWW'; // cliente temporario
           reserva.status = 'R'; // indicar sala reservada
+          // valor calculado
+          reserva.valortotal = reservasService.calculaValorReservas(reserva.sala, reserva.inicio, reserva.fim); 
+                    
           if (id === 'inserir') {
               
               await reservasService.createReservas(reserva);

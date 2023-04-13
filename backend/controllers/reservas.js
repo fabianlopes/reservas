@@ -1,3 +1,4 @@
+const { now } = require('mongoose');
 const reserva = require('../models/reservas')
 
 // apenas para testes
@@ -123,7 +124,7 @@ exports.createReserva = async (req, res) => {
   };
 
 exports.updateReserva = async (req, res) => {   
-    try {;
+    try {
       res.status(201).json(await reserva.reservaModel.findByIdAndUpdate(req.params.id,req.body));
     } catch (error) {
       res.status(400).json({ message: error.message });
@@ -131,18 +132,40 @@ exports.updateReserva = async (req, res) => {
   };
 
 exports.cancelaReserva = async (req, res) => {   
-    try {;
+    try {
       res.status(201).json(await reserva.reservaModel.findByIdAndUpdate(req.params.id, { status: 'C' } ));
     } catch (error) {
       res.status(400).json({ message: error.message });
     }
   };
-/*
-exports.disponivelReserva = async (req, res) => {   
-    try {;
+
+exports.disponivelReserva = async (req, res, idSala, dataReserva, horaReserva) => {   
+
+  const consulta = {}
+  const dataReservada = new Date(now);
+
+  if (dataReserva) {
+    // validar data
+    const dataReservada = new Date(dataReserva);    
+    if (isNaN(dataReservada.getTime())) {
+        res.status(400).json({ message: 'Data inválida' });
+      }
+    }
+  if (horaReserva) {
+    // validar hora
+    if (isNaN(horaReserva)) {
+      res.status(400).json({ message: 'Hora inválida' });
+    }
+  }
+  
+  consulta.data = dataReservada;
+  consulta.sala = idSala;
+  consulta.inicio = { $gte: horaReserva };
+  consulta.fim = { $lte: horaReserva };
+
+    try {
       res.status(201).json(await reserva.reservaModel.findByIdAndUpdate(req.params.id, { status: 'C' } ));
     } catch (error) {
       res.status(400).json({ message: error.message });
     }
   };
-*/

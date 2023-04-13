@@ -1,4 +1,5 @@
 import axios from 'axios';
+import salasService from './salasService';
 
 var reservasService = {
   getReservas: async () => {
@@ -16,15 +17,22 @@ var reservasService = {
 
     return response;
   },
-  createReservas: async (sala) => {
-    const response = await axios.post('http://localhost:5000/reservas/',sala);
+  createReservas: async (reserva) => {
+    const response = await axios.post('http://localhost:5000/reservas/',reserva);
 
     return response;
   },
-  updateReservas: async (id,sala) => {
-    const response = await axios.put('http://localhost:5000/reservas/'+id,sala);
+  updateReservas: async (id,reserva) => {
+    const response = await axios.put('http://localhost:5000/reservas/'+id,reserva);
 
     return response;
+  },
+  calculaValorReservas: async (idSala,horaInicio, horaFim) => {
+
+    const response = await salasService.getOneSalas(idSala);
+    const valorTotal = response.valor * (horaFim - horaInicio);
+
+    return valorTotal;
   },
 };
 
