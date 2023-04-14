@@ -29,11 +29,17 @@ var reservasService = {
   },
   calculaValorReservas: async (idSala,horaInicio, horaFim) => {
 
-    const response = await salasService.getOneSalas(idSala);
-    const valorTotal = response.valor * (horaFim - horaInicio);
+    const response = await salasService.getOneSalas(idSala);    
+    const valorTotal = response.data.valor * (horaFim - horaInicio);
 
     return valorTotal;
   },
+
+  getNumeroReservas: async () => {
+    const response = await axios.get('http://localhost:5000/reservas/novonumero');
+
+    return response;
+  }
 };
 
 export default reservasService;

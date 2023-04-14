@@ -115,7 +115,7 @@ exports.getOneReserva = async (req, res) => {
   }
 };
 
-exports.createReserva = async (req, res) => {   
+exports.createReserva = async (req, res) => {
     try {
       res.status(201).json(await reserva.reservaModel.create(req.body));
     } catch (error) {

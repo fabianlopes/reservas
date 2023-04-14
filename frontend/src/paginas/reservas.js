@@ -12,6 +12,7 @@ function Reservas() {
   const { id } = useParams();
   const [reserva, setFormData] = useState({});
   const [selectedValue, setSelectedValue] = useState('');
+  const [numeroReserva, setNumeroReserva] = useState('');
 
   const history = useNavigate();
   
@@ -21,10 +22,11 @@ function Reservas() {
       try {
 
         if (id !== 'inserir') {
-        const response = await reservasService.getOneReservas(id);
-        setFormData(response.data);
+          const response = await reservasService.getOneReservas(id);
+          setFormData(response.data);
         } else {
-          const numeroReserva = await reservasService.get
+          const response  = await reservasService.getNumeroReservas();
+          setNumeroReserva(response.data);
         }
 
       } catch (error) {
@@ -37,8 +39,7 @@ function Reservas() {
 
     const handleSubmit = async (event) => {
       event.preventDefault();
-      try {
-        
+      try {        
         
         if (event.nativeEvent.submitter.name === "salvar") {
 
@@ -47,10 +48,10 @@ function Reservas() {
           reserva.cliente = 'Internet - WWW'; // cliente temporario
           reserva.status = 'R'; // indicar sala reservada
           // valor calculado
-          reserva.valortotal = reservasService.calculaValorReservas(reserva.sala, reserva.inicio, reserva.fim); 
+          reserva.valortotal = await reservasService.calculaValorReservas(reserva.sala, reserva.inicio, reserva.fim); 
                     
           if (id === 'inserir') {
-              
+              alert('aqui ' + reserva.sala);
               await reservasService.createReservas(reserva);
               alert('incluido com sucesso!');
                
@@ -95,7 +96,7 @@ function Reservas() {
           <ComboSalas onSelectChange={handleSelectChange} />
           
           <Form.Label>Numero:</Form.Label>
-          <Form.Control type="text" name="numero" value={reserva.numero} onChange={handleChange}/>
+          <Form.Control type="text" name="numero" value={numeroReserva} readOnly/>
           <Form.Label>Data:</Form.Label>
           <Form.Control type="date" name="data" value={reserva.data} onChange={handleChange}/>
           <Form.Label>Hora inicio:</Form.Label>
