@@ -23,6 +23,8 @@ function Reservas() {
         if (id !== 'inserir') {
         const response = await reservasService.getOneReservas(id);
         setFormData(response.data);
+        } else {
+          const numeroReserva = await reservasService.get
         }
 
       } catch (error) {

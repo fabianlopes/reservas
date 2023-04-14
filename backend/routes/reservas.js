@@ -4,10 +4,14 @@ var reservaController = require('../controllers/reservas');
 
 //consultar reservas teste
 router.get('/', reservaController.getReservas);
+// buscar novo numero de reserva
+router.get('/novonumero', reservaController.getNumeroReserva);
 //consultar reservas em um perido
 router.get('/consultadatas/', reservaController.consultaDatasReservas);
 //consultar salas com reservas
 router.get('/consultasalas/', reservaController.consultaSalasReservas);
+// sala disponivel
+router.get('/disponivel', reservaController.disponivelReserva);
 // criar a reserva
 router.post('/', reservaController.createReserva);
 // alterar sala ou periodo da reserva

@@ -139,6 +139,15 @@ exports.cancelaReserva = async (req, res) => {
     }
   };
 
+  exports.getNumeroReserva = async (req, res) => {   
+    try {
+      //res.status(201).json(await reserva.reservaModel.nextValue('numero'));
+      res.status(201).json(await reserva.reservaModel.nextCount);
+    } catch (error) {
+      res.status(400).json({ message: error.message });
+    }
+  };
+
 exports.disponivelReserva = async (req, res, idSala, dataReserva, horaReserva) => {   
 
   const consulta = {}
