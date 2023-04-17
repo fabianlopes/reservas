@@ -1,8 +1,8 @@
 import React from 'react';
 import { Button, Navbar, Nav, Container} from 'react-bootstrap';
 import AnimatedText from 'react-animated-text-content';
+import { Link } from 'react-router-dom';
 
-//import { FaSearch, FaBell, FaGift } from 'react-icons/fa';
 
 function Cabecalho() {
   
@@ -13,7 +13,7 @@ function Cabecalho() {
         
           <Navbar bg="light" expand="lg">
             <Container>
-              <Navbar.Brand href="#">
+              <Navbar.Brand href="/">
                 
               <img
               src='https://cdn-icons-png.flaticon.com/128/1329/1329398.png'
@@ -46,11 +46,13 @@ function Cabecalho() {
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                   <Nav className="me-auto">
-                    <Nav.Link href="#">Home</Nav.Link>
+                    <Nav.Link href="/">Home</Nav.Link>
                     <Nav.Link href="/contatos">Contatos</Nav.Link>
                     <Nav.Link href="/sobre">Sobre</Nav.Link>
                   </Nav>
-                  <Button variant="outline-primary">Login</Button>
+                  <Link to="/index">
+                    <Button variant="outline-primary">Intranet</Button>
+                  </Link>
                 </Navbar.Collapse>
 
             </Container>

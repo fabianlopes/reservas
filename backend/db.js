@@ -54,8 +54,9 @@ async function deleteDb(COLLECTION,id) {
 
 async function updateDb(COLLECTION,id, dados) {
     const db = await connect();
+    delete dados._id;    
     return db.collection(COLLECTION).updateOne({ _id: new ObjectId(id) }, { $set: dados});
-
+    
 }
 
 module.exports = { findAll, insertDb, findOne, deleteDb, updateDb }

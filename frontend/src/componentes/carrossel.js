@@ -1,8 +1,7 @@
-import {React, useState, useEffect} from 'react';
-import { Carousel, Container, Row, Card } from 'react-bootstrap';
-import axios from 'axios';
-import '../css/carrossel.css';
+import React, {useState, useEffect} from 'react';
+import { Carousel, Container, Card, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import salasService from '../services/salasService';
 
 function Carrossel() {
 
@@ -12,8 +11,7 @@ function Carrossel() {
       async function fetchCarrosselData () {
       
       try {
-        
-        const response = await axios.get('http://localhost:5000/api/salas');
+        const response = await salasService.getSalas();
         setCarrosselData(response.data);
       } catch (error) {
         console.error(error);
@@ -27,12 +25,10 @@ function Carrossel() {
       
         <Container fluid>
         
-        <Row>
-
-        <Card>            
+        <Card as='div'>            
             <Card.Body>
                 <Card.Title></Card.Title>
-                <Card.Text>
+                <Card.Text as='div'>
                     <Carousel className='carousel'>                      
                         {carrosselData.map((item, index) => (
                           
@@ -49,13 +45,14 @@ function Carrossel() {
                         ))}
                     </Carousel>
                    
-                </Card.Text>          
+                </Card.Text>
+                <Link to='/reservas/inserir'>
+                          <Button>Reserve aqui</Button>
+                </Link>
             </Card.Body>
         </Card>
 
-        </Row>
-
-        </Container>
+      </Container>
 
     );
   }
