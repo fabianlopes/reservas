@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var reservaController = require('../controllers/reservas');
+var seqController = require('../controllers/seq');
 
 //consultar reservas teste
 router.get('/', reservaController.getReservas);
@@ -20,6 +21,9 @@ router.put('/:id', reservaController.updateReserva);
 router.get('/:id', reservaController.getOneReserva);
 // cancelar a reserva
 router.put('/cancelar/:id', reservaController.cancelaReserva);
+
+// criar a reserva
+router.post('/seq', seqController.seq);
 
 
 module.exports = router;

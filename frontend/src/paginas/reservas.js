@@ -24,6 +24,7 @@ function Reservas() {
         if (id !== 'inserir') {
           const response = await reservasService.getOneReservas(id);
           setFormData(response.data);
+          setNumeroReserva(response.data.numero);
         } else {
           const response  = await reservasService.getNumeroReservas();
           setNumeroReserva(response.data);
@@ -49,9 +50,10 @@ function Reservas() {
           reserva.status = 'R'; // indicar sala reservada
           // valor calculado
           reserva.valortotal = await reservasService.calculaValorReservas(reserva.sala, reserva.inicio, reserva.fim); 
+
+          alert(reserva.numero);
                     
-          if (id === 'inserir') {
-              alert('aqui ' + reserva.sala);
+          if (id === 'inserir') {              
               await reservasService.createReservas(reserva);
               alert('incluido com sucesso!');
                

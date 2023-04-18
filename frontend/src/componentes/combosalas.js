@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Form } from 'react-bootstrap';
+import { Form, FormGroup } from 'react-bootstrap';
 import salasService from '../services/salasService';
 
 function ComboSalas({ onSelectChange }) {
@@ -30,7 +30,7 @@ function ComboSalas({ onSelectChange }) {
   };
 
   return (
-    <Form>
+    <FormGroup>
       
         <Form.Label>Salas</Form.Label>
         <Form.Control as = 'select' value={selectedValue} onChange={handleChange}>
@@ -41,7 +41,7 @@ function ComboSalas({ onSelectChange }) {
               ))}
         </Form.Control>
       
-    </Form>
+    </FormGroup>
   );
 }
 

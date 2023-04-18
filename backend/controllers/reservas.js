@@ -1,4 +1,3 @@
-const { now } = require('mongoose');
 const reserva = require('../models/reservas')
 
 // apenas para testes
@@ -116,8 +115,23 @@ exports.getOneReserva = async (req, res) => {
 };
 
 exports.createReserva = async (req, res) => {
+
+var teste = new reserva.reservaModel({
+    "sala"        : "1",
+     "cliente"   : "1",
+     "funcionario" : "1",
+     "data"        : "2023-04-04",
+     "inicio"      : "1",
+     "fim"         : "1",
+     "valortotal"  : "1",
+     "observacao"  : "AAA",
+     "status"      : "R"
+ }); 
+
     try {
-      res.status(201).json(await reserva.reservaModel.create(req.body));
+      console.log(teste.status);
+      //res.status(201).json(await reserva.reservaModel.create(req.body));
+      res.status(201).json(await teste.save());
     } catch (error) {
       res.status(400).json({ message: error.message });
     }
