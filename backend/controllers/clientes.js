@@ -42,8 +42,7 @@ exports.createCliente = async (req, res) => {
     }
   }
   
-  exports.getoneClienteCPF = async (req, res) => {   
-      console.log(req.params.id);
+  exports.getoneClienteCPF = async (req, res) => {         
       try {
         res.status(201).json(await Cliente.ClienteModel.find({cpf:req.params.id}));
       } catch (error) {

@@ -5,6 +5,7 @@ import Cabecalho from '../componentes/cabecalho';
 import Rodape from '../componentes/rodape';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import reservasService from '../services/reservasService';
+import clientesService from '../services/clientesService';
 import ComboSalas from '../componentes/combosalas';
 
 function Reservas() {
@@ -49,7 +50,8 @@ function Reservas() {
           reserva.cliente = 'Internet - WWW'; // cliente temporario
           reserva.status = 'R'; // indicar sala reservada
           // valor calculado
-          reserva.valortotal = await reservasService.calculaValorReservas(reserva.sala, reserva.inicio, reserva.fim); 
+          reserva.valortotal = await reservasService.calculaValorReservas(reserva.sala, reserva.inicio, reserva.fim);
+          reserva.cpf = this.clienteButton(reserva.cpf);
 
           alert(reserva.numero);
                     
@@ -79,6 +81,17 @@ function Reservas() {
     const handleSelectChange = (value) => {
       setSelectedValue(value);      
       reserva.sala = value;
+    };    
+
+    const clienteButton = () => {
+      const cpfFiltro = '4582206204'
+      const cpfBanco = clientesService.getOneClientesCPF(cpfFiltro);
+      if (cpfBanco) {
+        alert("existe");
+      }
+      else {
+        alert("nao existe");
+      }
     };    
   
   return (    
@@ -117,6 +130,7 @@ function Reservas() {
             Cancelar
           </Button>
         </Form>
+        <Button onClick={clienteButton}>Clientes</Button>
       </Row>        
       
         <Row>          
