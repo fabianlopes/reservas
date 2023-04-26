@@ -49,6 +49,9 @@ function Carrossel() {
                 <Link to='/reservas/inserir'>
                           <Button>Reserve aqui</Button>
                 </Link>
+                <Link to='/controlereservas/'>
+                          <Button>Gerencia reservas</Button>
+                </Link>
             </Card.Body>
         </Card>
 
