@@ -4,6 +4,7 @@ import { useParams, useNavigate  } from "react-router-dom";
 import Cabecalho from '../componentes/cabecalho';
 import Rodape from '../componentes/rodape';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import salasService from '../services/salasService';
 import reservasService from '../services/reservasService';
 import clientesService from '../services/clientesService';
 import ComboSalas from '../componentes/combosalas';
@@ -12,8 +13,10 @@ function Reservas() {
   
   const { id } = useParams();
   const [reserva, setFormData] = useState({});
-  const [selectedValue, setSelectedValue] = useState('');
-  const [numeroReserva, setNumeroReserva] = useState('');
+  const [selectedSala, setSelectedSala] = useState('');
+  const [nomeCliente, setNomeCliente] = useState('');
+  const [cpfCliente, setcpfCliente] = useState('');
+
 
   const history = useNavigate();
   
@@ -21,15 +24,15 @@ function Reservas() {
       async function fetchFormData () {
       
       try {
+       
+          const responseReserva = await reservasService.getOneReservas(id);
+          setFormData(responseReserva.data);
 
-        if (id !== 'inserir') {
-          const response = await reservasService.getOneReservas(id);
-          setFormData(response.data);
-          setNumeroReserva(response.data.numero);
-        } else {
-          const response  = await reservasService.getNumeroReservas();
-          setNumeroReserva(response.data);
-        }
+          const responseSala = await salasService.getOneSalas(responseReserva.data.sala);
+          setSelectedSala(responseSala.data.numero);
+
+          const responseCliente = await clientesService.getOneClientes(responseReserva.data.cliente);
+          setcpfCliente(responseCliente.data.cpf);
 
       } catch (error) {
         console.error(error);
@@ -78,20 +81,18 @@ function Reservas() {
       setFormData({ ...reserva, [name]: value });
     };    
 
-    const handleSelectChange = (value) => {
-      setSelectedValue(value);      
-      reserva.sala = value;
+    const handleCPFChange = (event) => {
+      setcpfCliente(event.target.value);
+    };  
+
+    const handleSelectSalaChange = (value) => {
+      setSelectedSala(value);
     };    
 
-    const clienteButton = () => {
-      const cpfFiltro = '4582206204'
-      const cpfBanco = clientesService.getOneClientesCPF(cpfFiltro);
-      if (cpfBanco) {
-        alert("existe");
-      }
-      else {
-        alert("nao existe");
-      }
+    const clienteButton = async () => {
+      const cpfBanco = await clientesService.getOneClientesCPF(cpfCliente);
+      console.log(cpfBanco);
+      setNomeCliente(cpfBanco.nome);
     };    
   
   return (    
@@ -105,13 +106,13 @@ function Reservas() {
       
         <Form onSubmit={handleSubmit}>          
           
-          <Form.Label>Valor select</Form.Label>
-          <Form.Control name='sala' type="text" value={selectedValue} readOnly />
+          <Form.Label style={{ display: "none" }}>Sala: </Form.Label>
+          <Form.Control style={{ display: "none" }} name='sala' type="text" value={selectedSala} readOnly />
 
-          <ComboSalas onSelectChange={handleSelectChange} />
+          <ComboSalas onSelectChange={handleSelectSalaChange} />
           
           <Form.Label>Numero:</Form.Label>
-          <Form.Control type="text" name="numero" value={numeroReserva} readOnly/>
+          <Form.Control type="text" name="numero" value={reserva.numero} readOnly/>
           <Form.Label>Data:</Form.Label>
           <Form.Control type="date" name="data" value={reserva.data} onChange={handleChange}/>
           <Form.Label>Hora inicio:</Form.Label>
@@ -121,16 +122,20 @@ function Reservas() {
           <Form.Label>Valor:</Form.Label>
           <Form.Control type="number" name="valor" value={reserva.valor} onChange={handleChange}/>
           <Form.Label>Observação:</Form.Label>
-          <Form.Control type="text" name="observacao" value={reserva.observacao} onChange={handleChange}/>          
-          
+          <Form.Control type="text" name="observacao" value={reserva.observacao} onChange={handleChange}/>
+          <Form.Group>
+            <Form.Label>CPF do Cliente: </Form.Label>
+            <Form.Control type="number" name="cpf" value={cpfCliente} onChange={handleCPFChange}/>
+            <Form.Label>Nome: {nomeCliente}</Form.Label>
+            <Button onClick={clienteButton}>Clientes</Button>
+          </Form.Group>
           <Button variant="primary" type="submit" name="salvar">
             Salvar
           </Button>
           <Button variant="primary" type="submit" name="cancelar">
             Cancelar
           </Button>
-        </Form>
-        <Button onClick={clienteButton}>Clientes</Button>
+        </Form>        
       </Row>        
       
         <Row>          

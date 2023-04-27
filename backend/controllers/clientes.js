@@ -44,7 +44,15 @@ exports.createCliente = async (req, res) => {
   
   exports.getoneClienteCPF = async (req, res) => {         
       try {
-        res.status(201).json(await Cliente.ClienteModel.find({cpf:req.params.id}));
+
+        const cpf = parseInt(req.params.id); // CPF a ser pesquisado
+        const cliente = await Cliente.ClienteModel.findOne({ cpf: cpf }); // Procura cliente por CPF        
+
+        if (!cliente) {
+          return res.status(404).json({ message: "Cliente não encontrado" });
+    }
+
+    res.status(200).json(cliente);
       } catch (error) {
         res.status(400).json({ message: error.message });
       }

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Row, Col, Form, Modal, Button, Table } from 'react-bootstrap';
-import Cabecalho from '../components/cabecalho';
+import { Container, Row, Col, Form, Button, Table } from 'react-bootstrap';
+import Cabecalho from '../componentes/cabecalho';
 import clientesService from '../services/clientesService';
 import salasService from '../services/salasService';
 import reservasService from '../services/reservasService';
@@ -21,7 +21,7 @@ function ControleReservas() {
     
     try {
     
-        const reservas = await reservasService.getReservas;
+        const reservas = await reservasService.getReservas();
         setTableData(reservas.data);
         const selectSala = await salasService.getSalas();
         setOptionsSala(selectSala.data);
@@ -46,7 +46,7 @@ function ControleReservas() {
 
   const handleChange = (event) => {
       const { name, value } = event.target;
-      setFormData({ ...sala, [name]: value });
+      setFormData({ ...formData, [name]: value });
     };
 
   const handleSubmit = (event) => {
